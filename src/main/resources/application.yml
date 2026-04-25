@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: FinanceTicker
+
+server:
+  port: 8080
+
+#create a section somehow for tagging api keys and write into the.env file or global values/filepaths

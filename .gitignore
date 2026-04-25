@@ -3,6 +3,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### PROJ ###
+.env
+
 ### STS ###
 .apt_generated
 .classpath
