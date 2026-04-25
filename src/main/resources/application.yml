@@ -5,4 +5,11 @@ spring:
 server:
   port: 8080
 
-#create a section somehow for tagging api keys and write into the.env file or global values/filepaths
+finance-ticker:
+  api-keys:
+    finnhub: ${FINANCE_TICKER_API_KEYS_FINNHUB:-}
+    coingecko: ${FINANCE_TICKER_API_KEYS_COINGECKO:-}
+    exchangerate: ${FINANCE_TICKER_API_KEYS_EXCHANGERATE:-}
+
+cors:
+  allowed-origins: "*"
