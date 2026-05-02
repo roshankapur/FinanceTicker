@@ -2,6 +2,14 @@ package kapur.model;
 
 import java.time.Instant;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "stocks")
 public class Stock {
 
     /**
@@ -11,13 +19,25 @@ public class Stock {
      * previous close, t = timestamp
      */
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String ticker;
     private double current;
     private double high;
     private double low;
-    private double open;
+    private double openPrice;
     private double previousClose;
     private Instant timestamp;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public double getCurrent() {
         return current;
@@ -39,8 +59,8 @@ public class Stock {
         return low;
     }
 
-    public double getOpen() {
-        return open;
+    public double getOpenPrice() {
+        return openPrice;
     }
 
     public double getPreviousClose() {
@@ -63,8 +83,8 @@ public class Stock {
         this.low = low;
     }
 
-    public void setOpen(double open) {
-        this.open = open;
+    public void setOpenPrice(double openPrice) {
+        this.openPrice = openPrice;
     }
 
     public void setPreviousClose(double previousClose) {
@@ -78,7 +98,7 @@ public class Stock {
     @Override
     public String toString() {
         return "Ticker: " + this.ticker + " | Current: " + this.current + " | High: " + this.high
-                + " | Low: " + this.low + " | Open: " + this.open + " | Prev Close: " + this.previousClose
+                + " | Low: " + this.low + " | Open: " + this.openPrice + " | Prev Close: " + this.previousClose
                 + " | Timestamp: " + this.timestamp;
     }
 

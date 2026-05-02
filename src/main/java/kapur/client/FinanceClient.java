@@ -38,7 +38,7 @@ public class FinanceClient {
             stock.setCurrent(node.path("c").asDouble());
             stock.setHigh(node.path("h").asDouble());
             stock.setLow(node.path("l").asDouble());
-            stock.setOpen(node.path("o").asDouble());
+            stock.setOpenPrice(node.path("o").asDouble());
             stock.setPreviousClose(node.path("pc").asDouble());
             stock.setTimestamp(Instant.ofEpochSecond(node.path("t").asLong()));
 

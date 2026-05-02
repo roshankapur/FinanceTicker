@@ -16,7 +16,7 @@ public class FinanceTickerApplication {
 	@Bean
 	public CommandLineRunner run(TickerService service) {
 		return args -> {
-			service.displayStockInfo("AAPL");
+			service.getHistory();
 		};
 	}
 }
