@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import kapur.client.FinanceClient;
 import kapur.model.Stock;
 import kapur.repository.StockRepository;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,31 +21,45 @@ public class TickerService {
         this.repository = repository;
     }
 
-    /**
-     * Controller layer calls method to fetch a refresh of all price indicators for
-     * each stock. Eventually this method will update the database through the
-     * Controller layer
-     */
-    public List<Stock> getHistory() {
+    // Fetch fresh quotes from finnhub and save to DB.
+    public void refreshPrices() {
         for (String ticker : DEFAULT_TICKERS) {
             Stock stock = client.fetchStockQuote(ticker);
             if (stock != null) {
                 repository.save(stock);
             }
         }
+    }
+
+    // Return most recent quote for each ticker from DB
+    public List<Stock> getLatestPrices() {
+        List<Stock> latest = new ArrayList<>();
+        for (String ticker : DEFAULT_TICKERS) {
+            Stock stock = repository.findFirstByTickerOrderByTimestampDesc(ticker);
+            if (stock != null) {
+                latest.add(stock);
+            }
+        }
+        return latest;
+    }
+
+    // Return all stored stock history instead of calling finnhub
+    public List<Stock> getHistory() {
         return repository.findAll();
     }
 
-    public Stock displayStockInfo(String ticker) {
-        if (this.client == null) {
-            throw new RuntimeException("Client not initialized");
-        }
-        Stock stock = this.client.fetchStockQuote(ticker);
-        if (stock.getTicker() == null) {
-            System.out.println("Ticker not found: " + ticker);
+    // Return history for a specific ticker from the database.
+    public List<Stock> getTickerHistory(String ticker) {
+        return repository.findByTickerOrderByTimestampDesc(ticker);
+    }
+
+    // Fetches and saves a single ticker's quote and returns null if API call failed
+    public Stock fetchAndSaveQuote(String ticker) {
+        Stock stock = client.fetchStockQuote(ticker);
+        if (stock == null || stock.getTicker() == null) {
+            return null;
         }
         repository.save(stock);
-        System.out.println(stock);
         return stock;
     }
 

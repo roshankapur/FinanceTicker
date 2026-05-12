@@ -10,4 +10,5 @@ public interface StockRepository extends CrudRepository<Stock, Long> {
     List<Stock> findAll();
     List<Stock> findByTicker(String ticker);
     List<Stock> findByTickerOrderByTimestampDesc(String ticker);
+    Stock findFirstByTickerOrderByTimestampDesc(String ticker);
 }
