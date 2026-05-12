@@ -1,11 +1,24 @@
 spring:
   application:
     name: FinanceTicker
+  datasource:
+    url: jdbc:h2:mem:financetickerdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  h2:
+    console:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
 
 server:
   port: 8080
 
-environment:
+api:
+  finnhubkey: 
 
 #create a section somehow for tagging api keys and write into the.env file or global values/filepaths
 #finance-ticker.api-keys.*, cors.allowed-origins
